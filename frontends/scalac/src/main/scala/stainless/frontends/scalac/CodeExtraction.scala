@@ -870,9 +870,7 @@ trait CodeExtraction extends ASTExtractors {
         }
       }
 
-    case hole @ ExHoleExpression(tpt, exprs) =>
-      // FIXME: we ignore [[exprs]] for now...
-      xt.Hole(extractType(tpt))
+    case ExtractorHelpers.ExSymbol("scala", "Predef", "$qmark$qmark$qmark") => xt.NoTree(extractType(tr))
 
     case chs @ ExChooseExpression(body) =>
       extractTree(body) match {
