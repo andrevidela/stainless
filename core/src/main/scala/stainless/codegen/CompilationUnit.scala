@@ -48,7 +48,14 @@ trait CompilationUnit extends CodeGeneration {
 
     def evalToJVM(args: Seq[AnyRef], monitor: Monitor): AnyRef = {
       val allArgs = monitor +: args
+      try {
       meth.invoke(null, allArgs.toArray : _*)
+      } catch {
+        case t: java.lang.NoClassDefFoundError =>
+          println(expression)
+          println(classes.map(_.className))
+          throw t
+      }
     }
 
     def evalFromJVM(args: Seq[AnyRef], monitor: Monitor): Expr = {
