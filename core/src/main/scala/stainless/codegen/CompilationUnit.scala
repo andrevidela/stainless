@@ -51,9 +51,11 @@ trait CompilationUnit extends CodeGeneration {
       try {
         meth.invoke(null, allArgs.toArray : _*)
       } catch {
+        case ite: InvocationTargetException => throw ite.getCause
         case t: Throwable if !t.isInstanceOf[RuntimeException] =>
           println(args)
           println(expression)
+          println(classes.size)
           println(classes)
           t.printStackTrace
           throw t
