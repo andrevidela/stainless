@@ -232,7 +232,9 @@ trait VerificationChecker { self =>
           reporter.warning(u.getMessage)
           VCResult(VCStatus.Unsupported, Some(s), Some(time))
 
-        case Failure(e) => reporter.internalError(e)
+        case Failure(e) =>
+          e.printStackTrace
+          reporter.internalError(e)
       }
 
       reporter.synchronized {
